@@ -1,18 +1,10 @@
 <template>
   <div style="margin: 20px;">
-    <el-dropdown :disabled="true">
-      <span class="el-dropdown-link">
-        下拉菜单
-        <i class="el-icon-arrow-down el-icon--right"></i>
+    <el-tree ref="tree" :data="data" node-key="id" :show-checkbox="true">
+      <span class="custom-tree-node" slot-scope="{ node, data }">
+        <span class="auth-name">{{ data.label }}</span>
       </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>黄金糕</el-dropdown-item>
-        <el-dropdown-item>狮子头</el-dropdown-item>
-        <el-dropdown-item>螺蛳粉</el-dropdown-item>
-        <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-        <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+    </el-tree>
   </div>
 </template>
 
@@ -20,8 +12,66 @@
 export default {
   data() {
     return {
-      input: 'Hello Element UI!'
+      data: [
+        {
+          id: 1,
+          label: '一级 2',
+          children: [
+            {
+              id: 3,
+              label: '二级 2-1',
+              children: [
+                {
+                  id: 4,
+                  label: '三级 3-1-1',
+                  customNodeClass: 'qwertyui',
+                },
+                {
+                  id: 5,
+                  label: '三级 3-1-2',
+                  customNodeClass: 'qwertyui',
+                }
+              ]
+            },
+            {
+              id: 2,
+              label: '二级 2-2',
+              disabled: true,
+              children: [
+                {
+                  id: 6,
+                  label: '三级 3-2-1'
+                },
+                {
+                  id: 7,
+                  label: '三级 3-2-2',
+                  disabled: true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      input: 'Hello Element UI!',
+      value: '',
+      options: [
+        {
+          value: 1,
+          label: '一'
+        },
+        {
+          value: 2,
+          label: '二'
+        }
+      ]
     };
   }
 };
 </script>
+
+
+<style>
+  .qwertyui {
+    border: 1px solid;
+  }
+</style>
