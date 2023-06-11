@@ -314,6 +314,7 @@ export default {
       type: Boolean,
       default: true
     },
+    beforeRemoveTag: Function,
     /**
      * 改造: 下拉选项中不存在value时显示空字符串.
      */
@@ -787,6 +788,20 @@ export default {
     },
 
     deleteTag(event, tag) {
+      // 增加一个删除tag前的回调函数，注意！这是props！
+      // 如果返回是个boolean的话，则可以决定是否继续执行remove-tag的操作
+      let flag = true;
+
+      if (this.beforeRemoveTag) {
+        let handle = this.beforeRemoveTag(tag.value);
+        // 只有boolean执行判断，没有返回值的方法默认都执行删除
+        if (typeof handle === 'boolean') {
+          flag = handle;
+        }
+      }
+
+      if (!flag) return;
+
       let index = this.selected.indexOf(tag);
       if (index > -1 && !this.selectDisabled) {
         const value = this.value.slice();
